@@ -9,6 +9,7 @@ class User(models.Model):
 class Playlist(models.Model):
     playlist_name = models.CharField(max_length=50)
     playlist_description = models.CharField(max_length=200)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 class Song(models.Model):
@@ -17,5 +18,8 @@ class Song(models.Model):
     album = models.CharField(max_length=100)
     ranking = models.IntegerField()
     artwork = models.URLField()
+    playlist = models.ManyToManyField(Playlist)
 
 
+class Favorites(models.Model):
+    name = models.ForeignKey(User, on_delete=models.CASCADE)
