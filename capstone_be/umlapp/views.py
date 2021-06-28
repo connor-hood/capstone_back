@@ -176,3 +176,17 @@ class FavoriteDetail(APIView):
         favorite = self.get_object(pk)
         favorite.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class UserPlaylistList(APIView):
+    def get(self, request, pk):
+        plist = Playlist.objects.filter(user=pk)
+        serializer = PlaylistSerializer(plist, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -11,5 +11,5 @@ urlpatterns = [
     path('playlists/<int:pk>/', views.PlaylistDetail.as_view()),
     path('users/', views.UserList.as_view()),
     path('users/<int:pk>/', views.UserDetail.as_view()),
-    path('users/<int:pk>/playlists/', views.PlaylistDetail.as_view())
+    path('users/<int:pk>/playlists/', views.UserPlaylistList.as_view())
 ]
