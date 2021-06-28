@@ -4,11 +4,10 @@ from django.db import models
 # Create your models here.
 class User(models.Model):
     name = models.CharField(max_length=30)
-    playlist = models.ForeignKey('Playlist',
-                                 on_delete=models.CASCADE,
-                                 related_query_name='Playlist.user',
-                                 blank=True,
-                                 null=True)
+    playlist = models.ManyToManyField('Playlist',
+                                      related_query_name='Playlist.user',
+                                      blank=True,
+                                      null=True)
     favorite = models.ForeignKey('Favorite',
                                  on_delete=models.CASCADE,
                                  blank=True,
