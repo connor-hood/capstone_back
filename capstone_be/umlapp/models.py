@@ -7,10 +7,23 @@ class User(models.Model):
     playlist = models.ForeignKey('Playlist',
                                  on_delete=models.CASCADE,
                                  related_query_name='Playlist.user',
-                                 blank=True)
+                                 blank=True,
+                                 null=True)
     favorite = models.ForeignKey('Favorite',
                                  on_delete=models.CASCADE,
-                                 blank=True)
+                                 blank=True,
+                                 null=True)
+
+
+class Song(models.Model):
+    title = models.CharField(max_length=50)
+    artist = models.CharField(max_length=50)
+    album = models.CharField(max_length=100)
+    ranking = models.IntegerField()
+    artwork = models.URLField()
+    playlist = models.ManyToManyField("Playlist",
+                                      related_query_name='Playlist.song',
+                                      blank=True)
 
 
 class Playlist(models.Model):
@@ -20,21 +33,11 @@ class Playlist(models.Model):
                              on_delete=models.CASCADE,
                              related_query_name='User.playlist',
                              blank=True)
-    song = models.ForeignKey('Song',
+    song = models.ForeignKey(Song,
                              on_delete=models.CASCADE,
                              related_query_name='Song.Playlist',
-                             blank=True)
-
-
-class Song(models.Model):
-    title = models.CharField(max_length=50)
-    artist = models.CharField(max_length=50)
-    album = models.CharField(max_length=100)
-    ranking = models.IntegerField()
-    artwork = models.URLField()
-    playlist = models.ManyToManyField(Playlist,
-                                      related_query_name='Playlist.song',
-                                      blank=True)
+                             blank=True,
+                             null=True)
 
 
 class Favorite(models.Model):
@@ -42,4 +45,5 @@ class Favorite(models.Model):
                              on_delete=models.CASCADE,
                              related_query_name='User.favorite',
                              blank=True)
-    song = models.ManyToManyField(Song)
+    song = models.ManyToManyField(Song,
+                                  null=True)
