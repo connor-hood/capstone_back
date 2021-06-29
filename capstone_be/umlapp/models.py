@@ -4,14 +4,6 @@ from django.db import models
 # Create your models here.
 class User(models.Model):
     name = models.CharField(max_length=30)
-    playlist = models.ManyToManyField('Playlist',
-                                      related_query_name='Playlist.user',
-                                      blank=True,
-                                      null=True)
-    favorite = models.ForeignKey('Favorite',
-                                 on_delete=models.CASCADE,
-                                 blank=True,
-                                 null=True)
 
 
 class Song(models.Model):
@@ -20,9 +12,6 @@ class Song(models.Model):
     album = models.CharField(max_length=100)
     ranking = models.IntegerField()
     artwork = models.URLField()
-    playlist = models.ManyToManyField("Playlist",
-                                      related_query_name='Playlist.song',
-                                      blank=True)
 
 
 class Playlist(models.Model):
