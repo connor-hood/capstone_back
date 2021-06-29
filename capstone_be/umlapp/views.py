@@ -178,6 +178,7 @@ class FavoriteDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+# playlist by user views
 class UserPlaylistList(APIView):
     def get(self, request, pk):
         plist = Playlist.objects.filter(user=pk)
@@ -194,26 +195,41 @@ class UserPlaylistList(APIView):
 
 class UserPlaylistDetail(APIView):
 
-    def get_object(self, pk):
+    def get_object(self, pk, fk):
         try:
             return Playlist.objects.get(pk=pk)
         except Playlist.DoesNotExist:
             raise Http404
 
-    def get(self, request, pk):
-        playlist = self.get_object(pk)
-        serializer = PlaylistSerializer(playlist)
+    def get(self, request, pk, fk):
+        plist = self.get_object(pk=pk, fk=fk)
+        serializer = PlaylistSerializer(plist)
         return Response(serializer.data)
 
     def put(self, request, pk):
-        playlist = self.get_object(pk)
-        serializer = PlaylistSerializer(playlist, data=request.data)
+        plist = self.get_object(pk)
+        serializer = PlaylistSerializer(plist, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):
-        playlist = self.get_object(pk)
-        playlist.delete()
+        plist = self.get_object(pk)
+        plist.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+# favorite by user
+class UserFavoriteList(APIView):
+    def get(self, request, pk):
+        flist = Favorite.objects.filter(user=pk)
+        serializer = FavoriteSerializer(flist, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = FavoriteSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
