@@ -5,7 +5,7 @@ from .models import User, Playlist, Song, Favorite
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'name', 'playlist', 'favorite']
+        fields = ['id', 'name']
 
 
 class PlaylistSerializer(serializers.ModelSerializer):
@@ -17,7 +17,7 @@ class PlaylistSerializer(serializers.ModelSerializer):
 class SongSerializer(serializers.ModelSerializer):
     class Meta:
         model = Song
-        fields = ['id', 'title', 'artist', 'album', 'ranking', 'artwork', 'playlist']
+        fields = ['id', 'title', 'artist', 'album', 'ranking', 'artwork']
 
 
 class FavoriteSerializer(serializers.ModelSerializer):
