@@ -194,14 +194,14 @@ class UserPlaylistList(APIView):
 
 
 class UserPlaylistDetail(APIView):
-    def get_object(self, user_id, playlist_id):
+    def get_object(self, user_id, id):
         try:
-            return Playlist.objects.get(user=user_id).get(playlist_id=playlist_id)
+            return Playlist.objects.filter(user=user_id, id=id)
         except Playlist.DoesNotExist:
             raise Http404
 
-    def get(self, request, user_id, playlist_id):
-        plist = self.get_object(user_id=user_id, playlist_id=playlist_id)
+    def get(self, request, user_id, id):
+        plist = self.get_object(user_id=user_id, id=id)
         serializer = PlaylistSerializer(plist, many=True)
         return Response(serializer.data)
 
