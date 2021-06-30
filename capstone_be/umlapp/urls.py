@@ -1,6 +1,7 @@
 from django.urls import path
 from django.views.generic import RedirectView
 from . import views
+from .views import current_user
 
 
 urlpatterns = [
@@ -9,6 +10,7 @@ urlpatterns = [
     path('songs/<int:pk>/', views.SongDetail.as_view()),
     path('playlists/', views.PlaylistList.as_view()),
     path('playlists/<int:pk>/', views.PlaylistDetail.as_view()),
+    path('current_user/', current_user),
     path('users/', views.UserList.as_view()),
     path('users/<int:pk>/', views.UserDetail.as_view()),
     path('users/<int:user_id>/playlists/<int:id>/', views.UserPlaylistDetail.as_view()),
