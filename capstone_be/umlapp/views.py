@@ -222,7 +222,7 @@ class UserPlaylistDetail(APIView):
 # favorite by user
 class UserFavoriteList(APIView):
     def get(self, request, pk):
-        flist = Favorite.objects.filter(user=pk)
+        flist = Favorite.objects.filter(name_id=pk)
         serializer = FavoriteSerializer(flist, many=True)
         return Response(serializer.data)
 

@@ -11,8 +11,7 @@ class Song(models.Model):
     artist = models.CharField(max_length=50)
     album = models.CharField(max_length=100)
     ranking = models.IntegerField()
-    artwork = models.URLField()
-    video = models.URLField()
+
 
 
 class Playlist(models.Model):

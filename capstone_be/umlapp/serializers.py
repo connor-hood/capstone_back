@@ -17,7 +17,7 @@ class PlaylistSerializer(serializers.ModelSerializer):
 class SongSerializer(serializers.ModelSerializer):
     class Meta:
         model = Song
-        fields = ['id', 'title', 'artist', 'album', 'ranking', 'artwork', 'video']
+        fields = ['id', 'title', 'artist', 'album', 'ranking']
 
 
 class FavoriteSerializer(serializers.ModelSerializer):
